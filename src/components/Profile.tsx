@@ -1,21 +1,22 @@
 import { useContext } from "react";
 import { ChallengesContext } from "../contexts/ChallengesContext";
 
-import styles from "../styles/components/Profile.module.css";
+import Level from "../../public/icons/level.svg";
+import * as S from "../styles/components/Profile";
 
 export function Profile() {
-    const { level } = useContext(ChallengesContext)
+    const { level } = useContext(ChallengesContext);
 
     return (
-        <div className={styles.profileContainer}>
+        <S.ProfileContainer>
             <img src="https://github.com/dirosaki.png" alt="Diego Gomes" />
             <div>
                 <strong>Diego Gomes</strong>
                 <p>
-                    <img src="icons/level.svg" alt="Level" />
+                    <Level />
                     Level {level}
                 </p>
             </div>
-        </div>
+        </S.ProfileContainer>
     );
 }

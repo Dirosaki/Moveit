@@ -1,21 +1,26 @@
-import { useContext } from 'react';
-import { ChallengesContext } from '../contexts/ChallengesContext';
+import { useContext } from "react";
+import { ThemeContext } from "styled-components";
+import { ChallengesContext } from "../contexts/ChallengesContext";
 
-import styles from '../styles/components/LevelUpModal.module.css';
+import * as S from "../styles/components/LevelUpModal";
+import TwitterLogo from '../../public/icons/twitter.svg';
 
-export function LevelUpModal () {
-    const { level, closeLevelUpModal } = useContext(ChallengesContext)
+export function LevelUpModal() {
+    const { level, closeLevelUpModal } = useContext(ChallengesContext);
+
+    const { title } = useContext(ThemeContext);
 
     return (
-        <div className={styles.overlay}>
-            <div className={styles.container}>
+        <S.Overlay>
+            <S.Container active={title === "dark"}>
                 <header>{level}</header>
                 <strong>Parabéns</strong>
                 <p>Você alcançou um novo level.</p>
-                <button type="button" onClick={closeLevelUpModal}>
-                    <img src="/icons/close.svg" alt="Fechar modal"/>
+                <button className="closeModal" type="button" onClick={closeLevelUpModal}>
+                    <img src="/icons/close.svg" alt="Fechar modal" />
                 </button>
-            </div>
-        </div>
+                <button className="socialShare" type="button" >Compartilhar no Twitter <TwitterLogo/></button>
+            </S.Container>
+        </S.Overlay>
     );
 }

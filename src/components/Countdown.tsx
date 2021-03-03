@@ -1,15 +1,21 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { CountdownContext } from "../contexts/CountdownContext";
-import styles from "../styles/components/Countdown.module.css";
+
+import * as S from "../styles/components/Countdown";
+
+import Start from "../../public/icons/start.svg";
+import Close from "../../public/icons/close.svg";
+import Finished from "../../public/icons/finished.svg";
 
 export function Countdown() {
     const {
         minutes,
         seconds,
+        total,
         hasFinished,
         isActive,
         resetCountdown,
-        startCountdown,
+        startCountdown
     } = useContext(CountdownContext);
 
     const [minuteLeft, minuteRight] = String(minutes)
@@ -21,7 +27,7 @@ export function Countdown() {
 
     return (
         <div>
-            <div className={styles.countdownContainer}>
+            <S.CountdownContainer>
                 <div>
                     <span>{minuteLeft}</span>
                     <span>{minuteRight}</span>
@@ -31,44 +37,33 @@ export function Countdown() {
                     <span>{secondLeft}</span>
                     <span>{secondRight}</span>
                 </div>
-            </div>
+            </S.CountdownContainer>
 
             {hasFinished ? (
-                <button disabled className={styles.countdownButton}>
+                <S.CountdownButton disabled className="disabled">
                     Ciclo encerrado
-                    <img src="icons/finished.svg" alt="Finished" />
-                </button>
+                    <Finished />
+                </S.CountdownButton>
             ) : (
                 <>
                     {isActive ? (
-                        <button
+                        <S.CountdownButton
                             type="button"
-                            className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
+                            className="active"
                             onClick={resetCountdown}
+                            timingAnimate={`${total}s`}
                         >
                             Abandonar ciclo
-                            <svg
-                                width="14"
-                                height="14"
-                                viewBox="0 0 14 14"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
-                                    fill="#666666"
-                                />
-                            </svg>
-                        </button>
+                            <Close />
+                        </S.CountdownButton>
                     ) : (
-                        <button
+                        <S.CountdownButton
                             type="button"
-                            className={styles.countdownButton}
                             onClick={startCountdown}
                         >
                             Iniciar um ciclo
-                            <img src="icons/start.svg" alt="Start" />
-                        </button>
+                            <Start />
+                        </S.CountdownButton>
                     )}
                 </>
             )}
